@@ -9,7 +9,6 @@ const Container = styled.TouchableOpacity`
   background-color: ${COLORS.WHITE};
   border-radius: 10px;
   margin-bottom: 25px;
-  elevation: 5;
 `;
 
 const ContentContainer = styled.View`

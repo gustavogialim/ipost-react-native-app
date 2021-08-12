@@ -1,8 +1,17 @@
 import styled from 'styled-components/native';
 
+import {getDimensions} from '@/helpers/deviceHelper';
 import COLORS from '@/utils/styles/colors';
 import SIZES from '@/utils/styles/sizes';
 import FONTS from '@/utils/styles/fonts';
+
+const windowWidth = getDimensions().width;
+const illustrationPaddingSize = 60;
+const illustrationWidth =
+  windowWidth - SIZES.CONTAINER_PADDING - illustrationPaddingSize;
+const illustrationHeightPercentage = 87;
+const illustrationHeight =
+  (illustrationHeightPercentage * illustrationWidth) / 100;
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -32,14 +41,15 @@ const ContentContainer = styled.View`
 `;
 
 const Illustration = styled.View`
-  width: 320px;
-  height: 250px;
+  align-self: center;
+  width: ${illustrationWidth}px;
+  height: ${illustrationHeight}250px;
   margin-vertical: 20px;
 `;
 
 const FooterContainer = styled.View`
   background-color: ${COLORS.WHITE};
-  padding-top: 20px;
+  padding-top: 10px;
   padding-bottom: 20px;
   padding-horizontal: ${SIZES.CONTAINER_PADDING}px;
 `;

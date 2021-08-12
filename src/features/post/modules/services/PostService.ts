@@ -1,4 +1,6 @@
-import PostRepository from '@/features/post/modules/repositories/PostRepository';
+import ApiResponseError from '@/modules/error/entities/ApiResponseError';
+import LocalPostRepository from '@/features/post/modules/repositories/LocalPostRepository';
+import ExternalPostRepository from '@/features/post/modules/repositories/ExternalPostRepository';
 import {
   AddPostPayload,
   EditPostPayload,
@@ -6,31 +8,74 @@ import {
 import {Post} from '@/features/post/modules/interfaces';
 
 interface Dependencies {
-  postRepository: PostRepository;
+  localPostRepository: LocalPostRepository;
+  externalPostRepository: ExternalPostRepository;
 }
 
 export default class PostService {
-  private postRepository: PostRepository;
+  private localPostRepository: LocalPostRepository;
+  private externalPostRepository: ExternalPostRepository;
 
-  public constructor({postRepository}: Dependencies) {
-    this.postRepository = postRepository;
+  public constructor({
+    localPostRepository,
+    externalPostRepository,
+  }: Dependencies) {
+    this.localPostRepository = localPostRepository;
+    this.externalPostRepository = externalPostRepository;
   }
 
   public async getLocalPosts(): Promise<Post[]> {
-    const localPosts = await this.postRepository.getLocalPosts();
-
+    const localPosts = await this.localPostRepository.getLocalPosts();
     return localPosts;
   }
 
   public async addLocalPost(payload: AddPostPayload): Promise<void> {
-    await this.postRepository.addLocalPost(payload);
+    await this.localPostRepository.addLocalPost(payload);
   }
 
   public async editLocalPost(payload: EditPostPayload): Promise<void> {
-    await this.postRepository.editLocalPost(payload);
+    await this.localPostRepository.editLocalPost(payload);
   }
 
   public async deleteLocalPost(postId: string): Promise<void> {
-    await this.postRepository.deleteLocalPost(postId);
+    await this.localPostRepository.deleteLocalPost(postId);
+  }
+
+  public async getExternalPosts(): Promise<Post[] | never> {
+    const [response, error] =
+      await this.externalPostRepository.getExternalPosts();
+
+    if (!response) {
+      const {httpStatusCode, data, headers, message, config} = error;
+
+      throw new ApiResponseError({
+        httpStatusCode,
+        data,
+        headers,
+        message,
+        config,
+      });
+    }
+
+    return response;
+  }
+
+  public async getExternalPostDetails(postId: number): Promise<Post | never> {
+    const [response, error] =
+      await this.externalPostRepository.getExternalPostDetails(postId);
+
+    if (!response) {
+      const {httpStatusCode, data, headers, message, config} = error;
+
+      throw new ApiResponseError({
+        httpStatusCode,
+        data,
+        headers,
+        message,
+        config,
+      });
+    }
+
+    return response;
   }
 }

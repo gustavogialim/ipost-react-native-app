@@ -27,17 +27,20 @@ const MyPostsContainer = ({
   postContext,
   navigation,
 }: Props): React.ReactElement => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [posts, setPosts] = React.useState<Post[]>([]);
+  const [selectedPost, setSelectedPost] = React.useState<Post>();
+  const [shouldShowPostDetailModal, setShouldShowPostDetailModal] =
+    React.useState(false);
 
   const getLocalPosts = React.useCallback(async (): Promise<void> => {
-    setIsLoading(true);
-
     postContext
       .getLocalPosts()
       .then(getLocalPostsSuccess)
       .catch(getLocalPostsError)
-      .finally((): void => setIsLoading(false));
+      .finally((): void => {
+        setIsLoading(false);
+      });
   }, [postContext]);
 
   const getLocalPostsSuccess = (localPosts: Post[]): void => {
@@ -51,14 +54,27 @@ const MyPostsContainer = ({
     );
   };
 
-  const deleteLocalPost = async (postId: string): Promise<void> => {
-    await postContext.deleteLocalPost(postId);
-    await getLocalPosts();
+  const deleteLocalPost = async (): Promise<void> => {
+    if (selectedPost) {
+      await postContext.deleteLocalPost(selectedPost.id as string);
+      await getLocalPosts();
+
+      handleShouldShowPostDetailModal();
+    }
   };
 
   const goToEditPostScreen = (post: Post): void => {
     postContext.setSelectedPostToEdit(post);
     navigation.navigate(AppScreens.EditPost);
+  };
+
+  const handleShouldShowPostDetailModal = (): void => {
+    setShouldShowPostDetailModal(!shouldShowPostDetailModal);
+  };
+
+  const onPostClick = (post: Post): void => {
+    setSelectedPost(post);
+    handleShouldShowPostDetailModal();
   };
 
   React.useEffect((): void => {
@@ -70,8 +86,12 @@ const MyPostsContainer = ({
       <MyPosts
         posts={posts}
         isLoading={isLoading}
+        selectedPost={selectedPost}
+        shouldShowPostDetailModal={shouldShowPostDetailModal}
         deleteLocalPost={deleteLocalPost}
         goToEditPostScreen={goToEditPostScreen}
+        onPostClick={onPostClick}
+        handleShouldShowPostDetailModal={handleShouldShowPostDetailModal}
       />
     </LazyNavigationHoc>
   );

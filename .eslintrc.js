@@ -41,6 +41,8 @@ const tsRules = {
   '@typescript-eslint/no-useless-constructor': 'error',
   '@typescript-eslint/semi': ['error'],
   '@typescript-eslint/explicit-member-accessibility': 'error',
+  'no-shadow': 'off',
+  '@typescript-eslint/no-shadow': ['error'],
 };
 
 module.exports = {

@@ -1,20 +1,27 @@
 import storage from '@/utils/storage/storage';
-import PostRepository from '@/features/post/modules/repositories/PostRepository';
+import Api from '@/utils/api/Api';
+import LocalPostRepository from '@/features/post/modules/repositories/LocalPostRepository';
+import ExternalPostRepository from '@/features/post/modules/repositories/ExternalPostRepository';
 
 import PostService from './PostService';
 
-export default class FilterServiceFactory {
-  private postRepository: PostRepository;
+export default class PostServiceFactory {
+  private localPostRepository: LocalPostRepository;
+  private externalPostRepository: ExternalPostRepository;
 
   public constructor() {
-    this.postRepository = new PostRepository({
+    this.localPostRepository = new LocalPostRepository({
       storage,
+    });
+    this.externalPostRepository = new ExternalPostRepository({
+      api: new Api(),
     });
   }
 
   public build(): PostService {
     return new PostService({
-      postRepository: this.postRepository,
+      localPostRepository: this.localPostRepository,
+      externalPostRepository: this.externalPostRepository,
     });
   }
 }

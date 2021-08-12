@@ -20,15 +20,20 @@ const HomeScreenContainer = ({navigation}: Props): React.ReactElement => {
     navigation.navigate(AppScreens.AddPost);
   };
 
-  const goToMyFiltersScreen = (): void => {
+  const goToMyPostsScreen = (): void => {
     navigation.navigate(AppScreens.MyPostsStack);
+  };
+
+  const goToExternalPostsScreen = (): void => {
+    navigation.navigate(AppScreens.ExternalPostsStack);
   };
 
   return (
     <LazyNavigationHoc>
       <HomeScreen
         goToAddPostScreen={goToAddPostScreen}
-        goToMyFiltersScreen={goToMyFiltersScreen}
+        goToMyPostsScreen={goToMyPostsScreen}
+        goToExternalPostsScreen={goToExternalPostsScreen}
       />
     </LazyNavigationHoc>
   );

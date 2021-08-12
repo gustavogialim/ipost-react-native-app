@@ -25,11 +25,11 @@ export interface PostContext {
   externalPosts: Post[];
   selectedPostToEdit: Post;
   getLocalPosts: () => Promise<Post[]>;
-  // getFilterInformation: (filterId: string) => Promise<Filter>;
-  // getPopularFilters: (searchText?: string) => Promise<Filter[]>;
   addLocalPost: (post: Post) => Promise<void>;
   editLocalPost: (post: Post) => Promise<void>;
   deleteLocalPost: (postId: string) => Promise<void>;
+  getExternalPosts: () => Promise<Post[]>;
+  getExternalPostDetails: (postId: number) => Promise<Post>;
   setSelectedPostToEdit: (post: Post) => void;
 }
 
@@ -71,6 +71,20 @@ export class PostProvider extends Component<Props, State> {
     await postService.deleteLocalPost(postId);
   };
 
+  public getExternalPosts = async (): Promise<Post[]> => {
+    const {postService} = this.props;
+    const externalPosts = await postService.getExternalPosts();
+
+    return externalPosts;
+  };
+
+  public getExternalPostDetails = async (postId: number): Promise<Post> => {
+    const {postService} = this.props;
+    const externalPost = await postService.getExternalPostDetails(postId);
+
+    return externalPost;
+  };
+
   public setSelectedPostToEdit = (post: Post): void => {
     this.setState({selectedPostToEdit: post});
   };
@@ -97,6 +111,8 @@ export class PostProvider extends Component<Props, State> {
       addLocalPost: this.addLocalPost,
       editLocalPost: this.editLocalPost,
       deleteLocalPost: this.deleteLocalPost,
+      getExternalPosts: this.getExternalPosts,
+      getExternalPostDetails: this.getExternalPostDetails,
       setSelectedPostToEdit: this.setSelectedPostToEdit,
     };
   };

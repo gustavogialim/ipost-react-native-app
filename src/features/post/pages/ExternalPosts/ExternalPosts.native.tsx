@@ -2,30 +2,29 @@ import React from 'react';
 import {FlatList} from 'react-native';
 
 import Loading from '@/components/Loading/Loading.native';
+import LoadingModal from '@/components/LoadingModal/LoadingModal.native';
 import PostComponent from '@/features/post/components/Post/Post.container';
 import PostDetailsModal from '@/features/post/components/PostDetailsModal/PostDetailsModal.native';
 import {Post} from '@/features/post/modules/interfaces';
 
-import Styled from './MyPosts.styles.native';
+import Styled from './ExternalPosts.styles.native';
 
 interface Props {
   posts: Post[];
   isLoading: boolean;
+  isFetchingPostDetails: boolean;
   shouldShowPostDetailModal: boolean;
   selectedPost: Post | undefined;
-  deleteLocalPost: () => Promise<void>;
-  goToEditPostScreen: (post: Post) => void;
   onPostClick: (post: Post) => void;
   handleShouldShowPostDetailModal: () => void;
 }
 
-const MyPostsScreen = ({
+const ExternalPostsScreen = ({
   posts,
   isLoading,
+  isFetchingPostDetails,
   shouldShowPostDetailModal,
   selectedPost,
-  deleteLocalPost,
-  goToEditPostScreen,
   onPostClick,
   handleShouldShowPostDetailModal,
 }: Props): React.ReactElement => {
@@ -39,11 +38,17 @@ const MyPostsScreen = ({
 
   const renderLoading = (): React.ReactElement => <Loading />;
 
+  const renderLoadingModal = (): React.ReactElement => (
+    <LoadingModal
+      visible={isFetchingPostDetails}
+      text="Buscando detalhes do post..."
+    />
+  );
+
   const renderPost = ({item}: {item: Post}): React.ReactElement => (
     <PostComponent
       post={item}
-      onPress={async (): Promise<void> => onPostClick(item)}
-      goToEditPostScreen={(): void => goToEditPostScreen(item)}
+      onPress={async (): Promise<void> => await onPostClick(item)}
     />
   );
 
@@ -72,7 +77,6 @@ const MyPostsScreen = ({
       visible={shouldShowPostDetailModal}
       post={selectedPost}
       onClose={handleShouldShowPostDetailModal}
-      onDeletePost={deleteLocalPost}
     />
   );
 
@@ -84,8 +88,9 @@ const MyPostsScreen = ({
     <Styled.Container>
       {renderPosts()}
       {renderPostDetailsModal()}
+      {renderLoadingModal()}
     </Styled.Container>
   );
 };
 
-export default MyPostsScreen;
+export default ExternalPostsScreen;

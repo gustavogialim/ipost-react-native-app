@@ -23,6 +23,12 @@ export default class PostRepository {
       ? JSON.parse(localPostsJson)
       : [];
 
+    localPostsArray.forEach((post: Post) => {
+      if (post.date) {
+        post.date = new Date(post.date.toString());
+      }
+    });
+
     return localPostsArray;
   };
 
@@ -41,13 +47,14 @@ export default class PostRepository {
   public editLocalPost = async (payload: EditPostPayload): Promise<void> => {
     const {id, title, text, author} = payload.post;
     const localPostsJson = await this.storage.getItem(StorageKeys.POSTS);
+
     const localPostsArray: Post[] = localPostsJson
       ? JSON.parse(localPostsJson)
       : [];
 
     const postIndex = localPostsArray.findIndex((post) => post.id === id);
 
-    if (postIndex) {
+    if (postIndex > -1) {
       localPostsArray[postIndex].title = title;
       localPostsArray[postIndex].text = text;
       localPostsArray[postIndex].author = author;

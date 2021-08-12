@@ -18,12 +18,12 @@ const Button = ({
   onPress,
 }: Props): React.ReactElement => {
   return (
-    <Styled.ButtonsContainer>
+    <Styled.ButtonContainer>
       <Styled.Button onPress={onPress} buttonColor={buttonColor}>
         {!isLoading && <Styled.ButtonText>{text}</Styled.ButtonText>}
         {isLoading && <Styled.ActivityIndicator />}
       </Styled.Button>
-    </Styled.ButtonsContainer>
+    </Styled.ButtonContainer>
   );
 };
 

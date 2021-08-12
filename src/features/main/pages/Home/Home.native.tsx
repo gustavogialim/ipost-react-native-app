@@ -8,12 +8,14 @@ import Styled from './Home.styles.native';
 
 interface Props {
   goToAddPostScreen: () => void;
-  goToMyFiltersScreen: () => void;
+  goToMyPostsScreen: () => void;
+  goToExternalPostsScreen: () => void;
 }
 
 const HomeScreen = ({
   goToAddPostScreen,
-  goToMyFiltersScreen,
+  goToMyPostsScreen,
+  goToExternalPostsScreen,
 }: Props): React.ReactElement => {
   return (
     <Styled.Container>
@@ -22,10 +24,10 @@ const HomeScreen = ({
       </Styled.HeaderContainer>
       <Styled.ContentContainer>
         <Styled.Illustration>
-          <MobilePostsIllustration width={320} height={250} />
+          <MobilePostsIllustration />
         </Styled.Illustration>
-        <Button text="Meus Posts" onPress={goToMyFiltersScreen} />
-        <Button text="Posts Externos" onPress={goToMyFiltersScreen} />
+        <Button text="Meus Posts" onPress={goToMyPostsScreen} />
+        <Button text="Posts Externos" onPress={goToExternalPostsScreen} />
       </Styled.ContentContainer>
       <Styled.FooterContainer>
         <Button

@@ -1,40 +1,29 @@
 import * as React from 'react';
 
-import PostDetailsModal from '@/features/post/components/PostDetailsModal/PostDetailsModal.native';
+import {formatDate} from '@/helpers/dateHelper';
 import {Post} from '@/features/post/modules/interfaces';
 
 import Styled from './Post.styles.native';
 
 interface Props {
   post: Post;
-  shouldShowPostDetailModal: boolean;
-  handleShouldShowPostDetailModal: () => void;
-  onDeletePost?: () => Promise<void>;
+  onPress?: () => Promise<void>;
   goToEditPostScreen?: () => void;
 }
 
 const PostNative = ({
   post,
-  shouldShowPostDetailModal,
-  handleShouldShowPostDetailModal,
-  onDeletePost,
+  onPress,
   goToEditPostScreen,
 }: Props): React.ReactElement => {
-  const renderPostDetailsModal = (): React.ReactElement => (
-    <PostDetailsModal
-      visible={shouldShowPostDetailModal}
-      post={post}
-      onClose={handleShouldShowPostDetailModal}
-      onDeletePost={onDeletePost}
-    />
-  );
-
   return (
-    <Styled.Container onPress={handleShouldShowPostDetailModal}>
+    <Styled.Container onPress={onPress}>
       <Styled.ContentContainer>
         <Styled.InfoContainer>
-          <Styled.TitleText>{post.title}</Styled.TitleText>
-          <Styled.DateText>11/08/2021</Styled.DateText>
+          <Styled.TitleText numberOfLines={1}>{post.title}</Styled.TitleText>
+          {post.date && (
+            <Styled.DateText>{formatDate(post.date)}</Styled.DateText>
+          )}
         </Styled.InfoContainer>
 
         <Styled.InfoContainer>
@@ -46,8 +35,6 @@ const PostNative = ({
           )}
         </Styled.InfoContainer>
       </Styled.ContentContainer>
-
-      {renderPostDetailsModal()}
     </Styled.Container>
   );
 };

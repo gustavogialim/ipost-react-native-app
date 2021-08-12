@@ -6,6 +6,7 @@ import {
 
 import AppScreens from '@/routes/appScreens';
 import {HomeStackParamList} from '@/routes/types';
+
 import HomeScreen, {
   homeScreenOptions,
 } from '@/features/main/pages/Home/Home.screen.native';
@@ -15,7 +16,11 @@ import AddPostScreen, {
 import EditPostScreen, {
   editPostScreenOptions,
 } from '@/features/post/pages/EditPost/EditPost.screen.native';
+
 import MyPostsStack, {myPostsStackScreenOptions} from './MyPostsStack';
+import ExternalPostsStack, {
+  externalPostsStackScreenOptions,
+} from './ExternalPostsStack';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -46,6 +51,11 @@ const HomeStack = (): React.ReactElement => {
         name={AppScreens.MyPostsStack}
         component={MyPostsStack}
         options={myPostsStackScreenOptions}
+      />
+      <Stack.Screen
+        name={AppScreens.ExternalPostsStack}
+        component={ExternalPostsStack}
+        options={externalPostsStackScreenOptions}
       />
     </Stack.Navigator>
   );

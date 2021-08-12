@@ -6,28 +6,19 @@ import PostNative from './Post.native';
 
 interface Props {
   post: Post;
-  onDeletePost?: () => Promise<void>;
+  onPress?: () => Promise<void>;
   goToEditPostScreen?: () => void;
 }
 
 const PostContainer = ({
   post,
-  onDeletePost,
+  onPress,
   goToEditPostScreen,
 }: Props): React.ReactElement => {
-  const [shouldShowPostDetailModal, setShouldShowPostDetailModal] =
-    React.useState(false);
-
-  const handleShouldShowPostDetailModal = (): void => {
-    setShouldShowPostDetailModal(!shouldShowPostDetailModal);
-  };
-
   return (
     <PostNative
       post={post}
-      shouldShowPostDetailModal={shouldShowPostDetailModal}
-      handleShouldShowPostDetailModal={handleShouldShowPostDetailModal}
-      onDeletePost={onDeletePost}
+      onPress={onPress}
       goToEditPostScreen={goToEditPostScreen}
     />
   );

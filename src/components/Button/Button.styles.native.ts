@@ -7,13 +7,13 @@ interface ButtonProps {
   buttonColor: string;
 }
 
-const ButtonsContainer = styled.View`
-  margin-top: 25px;
+const ButtonContainer = styled.View`
+  margin-top: 15px;
 `;
 
 const Button = styled.TouchableOpacity<ButtonProps>`
   align-self: stretch;
-  height: 50px;
+  height: 45px;
   justify-content: center;
   align-items: center;
   padding-horizontal: 15px;
@@ -36,7 +36,7 @@ const ActivityIndicator = styled.ActivityIndicator.attrs({
 })``;
 
 export default {
-  ButtonsContainer,
+  ButtonContainer,
   Button,
   ButtonText,
   ActivityIndicator,
