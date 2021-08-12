@@ -13,7 +13,7 @@ const Container = styled.View<ContainerProps>`
     multiline ? '120px' : '55px'};
   margin-bottom: 15px;
   padding: 4px;
-  background-color: #ffe2de;
+  background-color: ${COLORS.INPUT_COLOR};
   border-radius: 16px;
 `;
 

@@ -1,10 +1,8 @@
 import React from 'react';
 
 import Button from '@/components/Button/Button.native';
-// import SearchInput from '@/components/SearchInput/SearchInput.container';
-// import SmallButton from '@/components/SmallButton/SmallButton.container';
-// import ListFiltersIcon from '@/assets/icons/list-filters.svg';
-// import {PaperInfo} from '@/modules/paper/interfaces';
+import MobilePostsIllustration from '@/assets/illustrations/mobile_posts.svg';
+import COLORS from '@/utils/styles/colors';
 
 import Styled from './Home.styles.native';
 
@@ -20,25 +18,21 @@ const HomeScreen = ({
   return (
     <Styled.Container>
       <Styled.HeaderContainer>
-        {/* <SearchInput
-          placeholderText="PROCURAR POR PAPEL DENTRO DO FILTRO APLICADO"
-          onSubmit={onSubmitSearch}
-        />
-        <Styled.FiltersContainer>
-          <Styled.AppliedFiltersText>
-            Filtros aplicados:
-          </Styled.AppliedFiltersText>
-
-          <SmallButton onPress={openListFilters} Icon={ListFiltersIcon} />
-        </Styled.FiltersContainer> */}
-        <Styled.WelcomeText>Bem vindo ao iPost</Styled.WelcomeText>
-        <Styled.WelcomeText>Gustavo!</Styled.WelcomeText>
+        <Styled.HeaderText>iPost</Styled.HeaderText>
       </Styled.HeaderContainer>
       <Styled.ContentContainer>
-        <Button text="Meus Post" onPress={goToMyFiltersScreen} />
+        <Styled.Illustration>
+          <MobilePostsIllustration width={320} height={250} />
+        </Styled.Illustration>
+        <Button text="Meus Posts" onPress={goToMyFiltersScreen} />
+        <Button text="Posts Externos" onPress={goToMyFiltersScreen} />
       </Styled.ContentContainer>
       <Styled.FooterContainer>
-        <Button text="Novo Post" onPress={goToAddPostScreen} />
+        <Button
+          text="Novo Post"
+          buttonColor={COLORS.LIGHT_GREEN}
+          onPress={goToAddPostScreen}
+        />
       </Styled.FooterContainer>
     </Styled.Container>
   );

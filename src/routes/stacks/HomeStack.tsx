@@ -12,6 +12,9 @@ import HomeScreen, {
 import AddPostScreen, {
   addPostScreenOptions,
 } from '@/features/post/pages/AddPost/AddPost.screen.native';
+import EditPostScreen, {
+  editPostScreenOptions,
+} from '@/features/post/pages/EditPost/EditPost.screen.native';
 import MyPostsStack, {myPostsStackScreenOptions} from './MyPostsStack';
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -33,6 +36,11 @@ const HomeStack = (): React.ReactElement => {
         name={AppScreens.AddPost}
         component={AddPostScreen}
         options={addPostScreenOptions}
+      />
+      <Stack.Screen
+        name={AppScreens.EditPost}
+        component={EditPostScreen}
+        options={editPostScreenOptions}
       />
       <Stack.Screen
         name={AppScreens.MyPostsStack}

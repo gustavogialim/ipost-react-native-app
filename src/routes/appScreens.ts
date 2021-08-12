@@ -6,6 +6,7 @@ enum AppScreens {
   MyPostsStack = 'MyPostsStack',
   MyPosts = 'MyPosts',
   AddPost = 'AddPost',
+  EditPost = 'EditPost',
 }
 
 export default AppScreens;

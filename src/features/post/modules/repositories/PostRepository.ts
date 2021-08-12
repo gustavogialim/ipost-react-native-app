@@ -1,6 +1,9 @@
 import {Storage} from '@/utils/storage/storage';
 import StorageKeys from '@/utils/storage/storageKeys';
-import {AddPostPayload} from '@/features/post/modules/payloads';
+import {
+  AddPostPayload,
+  EditPostPayload,
+} from '@/features/post/modules/payloads';
 import {Post} from '@/features/post/modules/interfaces';
 
 interface Dependencies {
@@ -23,25 +26,45 @@ export default class PostRepository {
     return localPostsArray;
   };
 
-  public addPost = async (payload: AddPostPayload): Promise<void> => {
-    const currentPostsJson = await this.storage.getItem(StorageKeys.POSTS);
-    const currentPostsArray = currentPostsJson
-      ? JSON.parse(currentPostsJson)
+  public addLocalPost = async (payload: AddPostPayload): Promise<void> => {
+    const localPostsJson = await this.storage.getItem(StorageKeys.POSTS);
+    const localPostsArray: Post[] = localPostsJson
+      ? JSON.parse(localPostsJson)
       : [];
 
-    const updatedPosts = [...currentPostsArray, payload.body];
+    const updatedPosts = [...localPostsArray, payload.body];
     const updatedPostsJson = JSON.stringify(updatedPosts);
 
     await this.storage.setItem(StorageKeys.POSTS, updatedPostsJson);
   };
 
-  public deletePost = async (postId: string): Promise<void> => {
-    const currentPostsJson = await this.storage.getItem(StorageKeys.POSTS);
-    const currentPostsArray = currentPostsJson
-      ? JSON.parse(currentPostsJson)
+  public editLocalPost = async (payload: EditPostPayload): Promise<void> => {
+    const {id, title, text, author} = payload.post;
+    const localPostsJson = await this.storage.getItem(StorageKeys.POSTS);
+    const localPostsArray: Post[] = localPostsJson
+      ? JSON.parse(localPostsJson)
       : [];
 
-    const updatedPosts = currentPostsArray.filter(
+    const postIndex = localPostsArray.findIndex((post) => post.id === id);
+
+    if (postIndex) {
+      localPostsArray[postIndex].title = title;
+      localPostsArray[postIndex].text = text;
+      localPostsArray[postIndex].author = author;
+
+      const updatedPostsJson = JSON.stringify(localPostsArray);
+
+      await this.storage.setItem(StorageKeys.POSTS, updatedPostsJson);
+    }
+  };
+
+  public deleteLocalPost = async (postId: string): Promise<void> => {
+    const localPostsJson = await this.storage.getItem(StorageKeys.POSTS);
+    const localPostsArray: Post[] = localPostsJson
+      ? JSON.parse(localPostsJson)
+      : [];
+
+    const updatedPosts = localPostsArray.filter(
       (post: Post) => post.id !== postId,
     );
     const updatedPostsJson = JSON.stringify(updatedPosts);

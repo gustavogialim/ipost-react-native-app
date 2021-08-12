@@ -12,49 +12,51 @@ import {
 } from '@/features/post/providers/PostProvider';
 import {Post, PostFormaValues} from '@/features/post/modules/interfaces';
 
-import AddPost from './AddPost.native';
+import EditPost from './EditPost.native';
 
-export type AddScreenNavigationProp = StackNavigationProp<
+export type EditScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
-  AppScreens.AddPost
+  AppScreens.EditPost
 >;
 
 interface Props {
   postContext: PostContext;
-  navigation: AddScreenNavigationProp;
+  navigation: EditScreenNavigationProp;
 }
 
-const AddPostContainer = ({
+const EditPostContainer = ({
   postContext,
   navigation,
 }: Props): React.ReactElement => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const {selectedPostToEdit} = postContext;
 
   const onSubmit = async (values: PostFormaValues): Promise<void> => {
     const {title, text, author} = values;
 
     const post: Post = {
+      id: selectedPostToEdit.id,
       title,
       text,
       author,
-      date: new Date(),
+      date: selectedPostToEdit.date || new Date(),
     };
 
-    await savePost(post);
+    await editPost(post);
   };
 
-  const savePost = async (post: Post): Promise<void> => {
+  const editPost = async (post: Post): Promise<void> => {
     try {
       setIsLoading(true);
-      await postContext.addLocalPost(post);
+      await postContext.editLocalPost(post);
 
-      Alert.alert('Sucesso!', 'Seu Post foi adicionado com sucesso.');
+      Alert.alert('Sucesso!', 'O Post foi altereado com sucesso.');
 
       navigation.navigate(AppScreens.Home);
     } catch (error) {
       Alert.alert(
         'Ops!',
-        `Houve algum problema ao adicionar seu Post.\nError: ${error.message}`,
+        `Houve algum problema ao alterar seu Post.\nError: ${error.message}`,
       );
     } finally {
       setIsLoading(false);
@@ -63,9 +65,13 @@ const AddPostContainer = ({
 
   return (
     <LazyNavigationHoc>
-      <AddPost onSubmit={onSubmit} isLoading={isLoading} />
+      <EditPost
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        post={selectedPostToEdit}
+      />
     </LazyNavigationHoc>
   );
 };
 
-export default compose(withPostConsumer)(AddPostContainer);
+export default compose(withPostConsumer)(EditPostContainer);

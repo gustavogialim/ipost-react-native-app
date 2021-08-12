@@ -3,15 +3,21 @@ import {StackNavigationOptions} from '@react-navigation/stack';
 
 import defaultHeaderScreenOptions from '@/routes/defaultScreenOptions/defaultHeaderOptions';
 
-import MyPostsContainer from './MyPosts.container';
+import MyPostsContainer, {
+  MyPostsScreenNavigationProp,
+} from './MyPosts.container';
+
+interface Props {
+  navigation: MyPostsScreenNavigationProp;
+}
 
 export const myPostsScreenOptions: StackNavigationOptions = {
   ...defaultHeaderScreenOptions,
   title: 'Meus Posts',
 };
 
-const MyPostsScreen = (): React.ReactElement => {
-  return <MyPostsContainer />;
+const MyPostsScreen = ({navigation}: Props): React.ReactElement => {
+  return <MyPostsContainer navigation={navigation} />;
 };
 
 export default MyPostsScreen;

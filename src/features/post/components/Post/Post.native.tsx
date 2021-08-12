@@ -10,6 +10,7 @@ interface Props {
   shouldShowPostDetailModal: boolean;
   handleShouldShowPostDetailModal: () => void;
   onDeletePost?: () => Promise<void>;
+  goToEditPostScreen?: () => void;
 }
 
 const PostNative = ({
@@ -17,12 +18,14 @@ const PostNative = ({
   shouldShowPostDetailModal,
   handleShouldShowPostDetailModal,
   onDeletePost,
+  goToEditPostScreen,
 }: Props): React.ReactElement => {
   const renderPostDetailsModal = (): React.ReactElement => (
     <PostDetailsModal
       visible={shouldShowPostDetailModal}
       post={post}
       onClose={handleShouldShowPostDetailModal}
+      onDeletePost={onDeletePost}
     />
   );
 
@@ -36,10 +39,10 @@ const PostNative = ({
 
         <Styled.InfoContainer>
           <Styled.PostText numberOfLines={1}>{post.text}</Styled.PostText>
-          {onDeletePost && (
-            <Styled.DeleteButton onPress={onDeletePost}>
-              <Styled.DeleteText>Excluir</Styled.DeleteText>
-            </Styled.DeleteButton>
+          {goToEditPostScreen && (
+            <Styled.ActionButton onPress={goToEditPostScreen}>
+              <Styled.ActonText>Editar</Styled.ActonText>
+            </Styled.ActionButton>
           )}
         </Styled.InfoContainer>
       </Styled.ContentContainer>

@@ -4,20 +4,21 @@ import {Formik, FormikProps} from 'formik';
 import Button from '@/components/Button/Button.native';
 import Input from '@/components/Input/Input.native';
 import COLORS from '@/utils/styles/colors';
-import {PostFormaValues} from '@/features/post/modules/interfaces';
+import {Post, PostFormaValues} from '@/features/post/modules/interfaces';
 
-import Styled from './AddPost.styles.native';
+import Styled from './EditPost.styles.native';
 
 interface Props {
   isLoading: boolean;
+  post: Post;
   onSubmit: (values: PostFormaValues) => Promise<void>;
 }
 
-const AddPost = ({onSubmit, isLoading}: Props): React.ReactElement => {
+const EditPost = ({isLoading, post, onSubmit}: Props): React.ReactElement => {
   const initialValues: PostFormaValues = {
-    title: '',
-    text: '',
-    author: '',
+    title: post.title,
+    text: post.text,
+    author: post.author,
   };
 
   return (
@@ -64,4 +65,4 @@ const AddPost = ({onSubmit, isLoading}: Props): React.ReactElement => {
   );
 };
 
-export default AddPost;
+export default EditPost;

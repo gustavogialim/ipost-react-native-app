@@ -1,5 +1,8 @@
 import PostRepository from '@/features/post/modules/repositories/PostRepository';
-import {AddPostPayload} from '@/features/post/modules/payloads';
+import {
+  AddPostPayload,
+  EditPostPayload,
+} from '@/features/post/modules/payloads';
 import {Post} from '@/features/post/modules/interfaces';
 
 interface Dependencies {
@@ -19,11 +22,15 @@ export default class PostService {
     return localPosts;
   }
 
-  public async addPost(payload: AddPostPayload): Promise<void> {
-    await this.postRepository.addPost(payload);
+  public async addLocalPost(payload: AddPostPayload): Promise<void> {
+    await this.postRepository.addLocalPost(payload);
+  }
+
+  public async editLocalPost(payload: EditPostPayload): Promise<void> {
+    await this.postRepository.editLocalPost(payload);
   }
 
   public async deleteLocalPost(postId: string): Promise<void> {
-    await this.postRepository.deletePost(postId);
+    await this.postRepository.deleteLocalPost(postId);
   }
 }

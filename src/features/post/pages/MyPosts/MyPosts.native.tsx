@@ -10,12 +10,14 @@ interface Props {
   posts: Post[];
   isLoading: boolean;
   deleteLocalPost: (postId: string) => Promise<void>;
+  goToEditPostScreen: (post: Post) => void;
 }
 
 const MyFiltersScreen = ({
   posts,
   isLoading,
   deleteLocalPost,
+  goToEditPostScreen,
 }: Props): React.ReactElement => {
   const renderNoPostsFound = (): React.ReactElement => (
     <Styled.NoPostsFound>
@@ -40,6 +42,7 @@ const MyFiltersScreen = ({
               onDeletePost={async (): Promise<void> =>
                 deleteLocalPost(post.id as string)
               }
+              goToEditPostScreen={(): void => goToEditPostScreen(post)}
             />
           ),
         )}

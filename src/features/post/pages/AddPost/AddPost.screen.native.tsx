@@ -3,15 +3,19 @@ import {StackNavigationOptions} from '@react-navigation/stack';
 
 import defaultHeaderScreenOptions from '@/routes/defaultScreenOptions/defaultHeaderOptions';
 
-import AddPostContainer from './AddPost.container';
+import AddPostContainer, {AddScreenNavigationProp} from './AddPost.container';
+
+interface Props {
+  navigation: AddScreenNavigationProp;
+}
 
 export const addPostScreenOptions: StackNavigationOptions = {
   ...defaultHeaderScreenOptions,
   title: 'Novo Post',
 };
 
-const AddPostScreen = (): React.ReactElement => {
-  return <AddPostContainer />;
+const AddPostScreen = ({navigation}: Props): React.ReactElement => {
+  return <AddPostContainer navigation={navigation} />;
 };
 
 export default AddPostScreen;

@@ -7,6 +7,7 @@ export type RootStackParamList = {
 export type HomeStackParamList = {
   [AppScreens.Home]: undefined;
   [AppScreens.AddPost]: undefined;
+  [AppScreens.EditPost]: undefined;
   [AppScreens.MyPostsStack]: undefined;
   [AppScreens.ExternalPostsStack]: undefined;
 };

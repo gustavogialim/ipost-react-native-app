@@ -4,7 +4,7 @@ import React, {createContext, Component, ReactElement} from 'react';
 import PostService from '@/features/post/modules/services/PostService';
 import PostServiceFactory from '@/features/post/modules/services/PostServiceFactory';
 import {Post} from '@/features/post/modules/interfaces';
-import {AddPostPayload} from '@/features/post/modules/payloads';
+import {AddPostPayload, EditPostPayload} from '@/features/post/modules/payloads';
 
 export const PostContext = createContext({});
 const PostConsumer = PostContext.Consumer;
@@ -17,17 +17,20 @@ interface Props {
 interface State {
   localPosts: Post[];
   externalPosts: Post[];
+  selectedPostToEdit: Post;
 }
 
 export interface PostContext {
   localPosts: Post[];
   externalPosts: Post[];
+  selectedPostToEdit: Post;
   getLocalPosts: () => Promise<Post[]>;
   // getFilterInformation: (filterId: string) => Promise<Filter>;
   // getPopularFilters: (searchText?: string) => Promise<Filter[]>;
-  addPost: (post: Post) => Promise<void>;
-  // editFilter: (filter: Filter) => Promise<void>;
+  addLocalPost: (post: Post) => Promise<void>;
+  editLocalPost: (post: Post) => Promise<void>;
   deleteLocalPost: (postId: string) => Promise<void>;
+  setSelectedPostToEdit: (post: Post) => void;
 }
 
 export class PostProvider extends Component<Props, State> {
@@ -48,11 +51,18 @@ export class PostProvider extends Component<Props, State> {
     return localPosts;
   };
 
-  public addPost = async (post: Post): Promise<void> => {
+  public addLocalPost = async (post: Post): Promise<void> => {
     const {postService} = this.props;
     const payload = new AddPostPayload(post);
 
-    await postService.addPost(payload);
+    await postService.addLocalPost(payload);
+  };
+
+  public editLocalPost = async (post: Post): Promise<void> => {
+    const {postService} = this.props;
+    const payload = new EditPostPayload(post);
+
+    await postService.editLocalPost(payload);
   };
 
   public deleteLocalPost = async (postId: string): Promise<void> => {
@@ -61,20 +71,33 @@ export class PostProvider extends Component<Props, State> {
     await postService.deleteLocalPost(postId);
   };
 
+  public setSelectedPostToEdit = (post: Post): void => {
+    this.setState({selectedPostToEdit: post});
+  };
+
   private getInitialState = (): State => ({
     localPosts: [],
     externalPosts: [],
+    selectedPostToEdit: {
+      title: '',
+      text: '',
+      author: '',
+      date: new Date(),
+    },
   });
 
   private getContextValue = (): PostContext => {
-    const {localPosts, externalPosts} = this.state;
+    const {localPosts, externalPosts, selectedPostToEdit} = this.state;
 
     return {
       localPosts,
       externalPosts,
+      selectedPostToEdit,
       getLocalPosts: this.getLocalPosts,
-      addPost: this.addPost,
+      addLocalPost: this.addLocalPost,
+      editLocalPost: this.editLocalPost,
       deleteLocalPost: this.deleteLocalPost,
+      setSelectedPostToEdit: this.setSelectedPostToEdit,
     };
   };
 

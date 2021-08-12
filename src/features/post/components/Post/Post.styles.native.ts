@@ -53,13 +53,13 @@ const PostText = styled.Text`
   line-height: 15px;
 `;
 
-const DeleteButton = styled.TouchableOpacity`
-  background-color: ${COLORS.RED};
+const ActionButton = styled.TouchableOpacity`
+  background-color: ${COLORS.BLUE};
   border-radius: 10px;
   padding: 3px 6px;
 `;
 
-const DeleteText = styled.Text`
+const ActonText = styled.Text`
   font-family: ${FONTS.ROBOTO_REGULAR};
   color: ${COLORS.WHITE};
   font-size: 13px;
@@ -73,6 +73,6 @@ export default {
   TitleText,
   DateText,
   PostText,
-  DeleteButton,
-  DeleteText,
+  ActionButton,
+  ActonText,
 };
