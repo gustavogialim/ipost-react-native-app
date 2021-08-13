@@ -38,7 +38,7 @@ export default class PostRepository {
       ? JSON.parse(localPostsJson)
       : [];
 
-    const updatedPosts = [...localPostsArray, payload.body];
+    const updatedPosts = [...localPostsArray, payload.post];
     const updatedPostsJson = JSON.stringify(updatedPosts);
 
     await this.storage.setItem(StorageKeys.POSTS, updatedPostsJson);

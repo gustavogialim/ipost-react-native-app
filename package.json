@@ -57,12 +57,24 @@
   "jest": {
     "preset": "react-native",
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
       "jsx",
-      "json",
-      "node"
-    ]
+      "ts",
+      "tsx"
+    ],
+    "moduleNameMapper": {
+      "styled-components": "<rootDir>/node_modules/styled-components/native/dist/styled-components.native.cjs.js",
+      "@/(.*)": "<rootDir>/src/$1"
+    },
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation)"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   }
 }

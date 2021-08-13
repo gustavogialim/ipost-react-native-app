@@ -1,6 +1,6 @@
 import ApiResponseError from '@/modules/error/entities/ApiResponseError';
-import LocalPostRepository from '@/features/post/modules/repositories/LocalPostRepository';
-import ExternalPostRepository from '@/features/post/modules/repositories/ExternalPostRepository';
+import LocalPostRepository from '@/features/post/modules/repositories/LocalPostRepository/LocalPostRepository';
+import ExternalPostRepository from '@/features/post/modules/repositories/ExternalPostRepository/ExternalPostRepository';
 import {
   AddPostPayload,
   EditPostPayload,

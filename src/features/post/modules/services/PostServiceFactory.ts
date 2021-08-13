@@ -1,7 +1,7 @@
 import storage from '@/utils/storage/storage';
 import Api from '@/utils/api/Api';
-import LocalPostRepository from '@/features/post/modules/repositories/LocalPostRepository';
-import ExternalPostRepository from '@/features/post/modules/repositories/ExternalPostRepository';
+import LocalPostRepository from '@/features/post/modules/repositories/LocalPostRepository/LocalPostRepository';
+import ExternalPostRepository from '@/features/post/modules/repositories/ExternalPostRepository/ExternalPostRepository';
 
 import PostService from './PostService';
 
