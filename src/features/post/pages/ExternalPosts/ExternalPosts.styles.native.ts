@@ -10,13 +10,13 @@ const Container = styled.SafeAreaView`
 `;
 
 const ContentContainer = styled.View`
+  flex: 1;
   padding-horizontal: ${SIZES.CONTAINER_PADDING}px;
   padding-top: 15px;
   background-color: ${COLORS.BACKGROUND_COLOR};
 `;
 
 const NoPostsFound = styled.View`
-  flex: 1;
   justify-content: center;
   align-items: center;
 `;

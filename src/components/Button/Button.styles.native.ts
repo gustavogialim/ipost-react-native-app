@@ -4,7 +4,8 @@ import COLORS from '@/utils/styles/colors';
 import FONTS from '@/utils/styles/fonts';
 
 interface ButtonProps {
-  buttonColor: string;
+  buttonColor: COLORS;
+  disabled: boolean | undefined;
 }
 
 const ButtonContainer = styled.View`
@@ -18,8 +19,8 @@ const Button = styled.TouchableOpacity<ButtonProps>`
   align-items: center;
   padding-horizontal: 15px;
   border-radius: 25px;
-  background-color: ${({buttonColor}: ButtonProps): string =>
-    buttonColor ? buttonColor : COLORS.LIGHT_RED};
+  background-color: ${({buttonColor, disabled}: ButtonProps): string =>
+    disabled ? COLORS.LIGHT_GRAY : buttonColor};
 `;
 
 const ButtonText = styled.Text`

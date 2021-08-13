@@ -30,7 +30,7 @@ const InfoContainer = styled.View`
 `;
 
 const TitleText = styled.Text`
-  width: 70%;
+  width: 60%;
   font-family: ${FONTS.ROBOTO_BOLD};
   color: ${COLORS.OFF_BLACK};
   font-size: 14px;

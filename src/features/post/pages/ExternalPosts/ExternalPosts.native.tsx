@@ -31,7 +31,7 @@ const ExternalPostsScreen = ({
   const renderNoPostsFound = (): React.ReactElement => (
     <Styled.NoPostsFound>
       <Styled.NoPostsFoundText>
-        Você ainda não tem nenhum post!
+        Nenhum post externo encontrado.
       </Styled.NoPostsFoundText>
     </Styled.NoPostsFound>
   );

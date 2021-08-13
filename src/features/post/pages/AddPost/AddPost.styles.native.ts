@@ -28,7 +28,6 @@ const ContentContainer = styled.View`
 `;
 
 const FooterContainer = styled.View`
-  margin-top: 20px;
   margin-bottom: 20px;
 `;
 
